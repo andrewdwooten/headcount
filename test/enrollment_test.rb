@@ -14,6 +14,10 @@ class EnrollmentTest < MiniTest::Test
 			assert Enrollment, e.class
 		end
 
+		def test_enrollment_knows_its_name
+			assert_equal "ACADEMY 20", e.name
+		end
+
 		def test_enrollment_holds_partic_in_k_in_hash
 			assert Hash, e.kindergarten_participation_by_year
 			assert [2010, 2011, 2012], e.kindergarten_participation_by_year.keys
