@@ -1,8 +1,9 @@
 require_relative 'test_helper.rb'
-require_relative '../lib/district_repo.rb'
+require '../lib/district_repo.rb'
 require 'csv'
 
 class DistrictRepoTest < MiniTest::Test
+
 	attr_reader :dr, :dr2
 
 	def setup
@@ -49,5 +50,3 @@ class DistrictRepoTest < MiniTest::Test
 		end
 	end
 
-
-			
