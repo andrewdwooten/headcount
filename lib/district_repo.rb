@@ -1,19 +1,23 @@
 require './lib/district.rb'
+require './lib/enrollment_repo.rb'
 require 'csv'
 require 'pry'
 
 class DistrictRepository
-	attr_reader :contents
+	attr_reader :contents 
+	attr_accessor :enrollment
 
 	def initialize
 	@contents = []
+	@enrollment = EnrollmentRepository.new
 	end
 
-	def load_data(nest)
-		data = CSV.read nest.values[0].values[0], 
+	def load_data(load)
+		data = CSV.read load.values[0].values[0], 
 			headers: true, header_converters: :symbol
 		data.each {|row| contents << {:name => row[0]}}
-		contents.uniq!.collect! {|namer| District.new(namer)} 
+		contents.uniq!.collect! {|namer| District.new(namer)}
+		enrollment.load_data(load)
 	end
 
 	def find_by_name(search_name)

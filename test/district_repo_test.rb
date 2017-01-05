@@ -1,9 +1,10 @@
 require_relative 'test_helper.rb'
 require_relative '../lib/district_repo.rb'
+require_relative '../lib/enrollment_repo.rb'
 require 'csv'
 
 class DistrictRepoTest < MiniTest::Test
-	attr_reader :dr
+	attr_reader :dr, :dr2
 
 	def setup
 		@dr = DistrictRepository.new
@@ -11,6 +12,7 @@ class DistrictRepoTest < MiniTest::Test
   			:enrollment => {
     			:kindergarten => "./test/fixtures/kindergarteners_fixture.csv"
 				}})
+		@dr2 = DistrictRepository.new
 	end
 
 		def test_it_is_a_district_repo
@@ -35,6 +37,16 @@ class DistrictRepoTest < MiniTest::Test
 			search_results = dr.find_all_matching('Aca')
 			assert_equal Array, search_results.class
 			assert_equal District, search_results[0].class
+		end
+
+		def test_on_instantiation_districtrepo_has_an_empty_enrollment_repo
+			assert_equal EnrollmentRepository, dr2.enrollment.class
+			assert dr2.enrollment.contents.empty?
+		end
+
+		def test_on_loading_data_the_dr_generates_loads_enrollment_repo
+			assert_equal EnrollmentRepository, dr.enrollment.class
+			refute dr.enrollment.contents.empty?
 		end
 	end
 
