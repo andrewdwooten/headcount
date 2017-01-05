@@ -14,4 +14,8 @@ class Enrollment
 	def kindergarten_participation_in_year(year)
 		name_stats.values[1].values_at(year)
 	end
+
+	def name
+		name_stats.values[0]
+	end
 end
