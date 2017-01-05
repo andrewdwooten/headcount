@@ -1,6 +1,5 @@
 require_relative 'test_helper.rb'
 require_relative '../lib/district_repo.rb'
-require_relative '../lib/enrollment_repo.rb'
 require 'csv'
 
 class DistrictRepoTest < MiniTest::Test
