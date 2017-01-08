@@ -48,5 +48,10 @@ class DistrictRepoTest < MiniTest::Test
 			assert_equal EnrollmentRepository, dr.enrollment.class
 			refute dr.enrollment.contents.empty?
 		end
+
+		def test_district_repo_districts_have_relationship_with_enrollment
+			district = dr.find_by_name("Academy 20")
+			assert_equal 0.391, district.enrollment.kindergarten_participation_in_year("2007")
+		end
 	end
 

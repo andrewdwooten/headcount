@@ -12,7 +12,7 @@ class Enrollment
 	end
 
 	def kindergarten_participation_in_year(year)
-		name_stats.values[1].values_at(year)
+		name_stats.values[1].values_at(year)[0][0..4].to_f
 	end
 
 	def name
