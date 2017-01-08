@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require '../lib/district_repo'
 require '../lib/headcount_analyst'
 require_relative 'test_helper'
@@ -34,3 +35,11 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
 end
+=======
+require_relative 'test_helper.rb'
+require '../lib/district_repo.rb'
+require 'csv'
+
+class HeadcountAnalystTest < Minitest::Test
+  attr_reader :ha
+>>>>>>> ebe8b5b0499c1dc73bce0ae3f5b216dfa738334a
