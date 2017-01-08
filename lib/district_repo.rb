@@ -16,7 +16,7 @@ class DistrictRepository
 		data = CSV.read load.values[0].values[0], 
 			headers: true, header_converters: :symbol
 		data.each {|row| contents << {:name => row[0]}}
-		contents.uniq!.collect! {|namer| District.new(namer)}
+		contents.uniq!.collect! {|namer| District.new(namer, self)}
 		enrollment.load_data(load)
 	end
 
