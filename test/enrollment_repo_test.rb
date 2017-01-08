@@ -1,7 +1,6 @@
 require_relative 'test_helper.rb'
 require_relative '../lib/enrollment_repo.rb'
 require_relative '../lib/enrollment.rb'
-require 'csv'
 
 class EnrollmentRepositoryTest < MiniTest::Test
 	attr_reader :er, :er2
