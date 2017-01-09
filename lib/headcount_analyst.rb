@@ -1,8 +1,8 @@
 require 'pry'
-<<<<<<< HEAD
-=======
+
+
 require 'pry'
->>>>>>> ce3f3ee7e956628b60c798a21d121a48f3171139
+
 require_relative 'district_repo'
 
 class HeadcountAnalyst

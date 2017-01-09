@@ -33,8 +33,8 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 0.685, @ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
   end
 
-<<<<<<< HEAD
+
 end
-=======
+
 end
->>>>>>> ce3f3ee7e956628b60c798a21d121a48f3171139
+
