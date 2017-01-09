@@ -18,5 +18,18 @@ def build_base(nest)
   def cleanup(load_base, base)
     load_base.map! {|enroller| enroller if enroller.keys.count == base.values[0].keys.count + 1}.compact
   end
+
+  def link_to_enroll(repo, dist)
+    repo.find_by_name(dist).enrollment
+  end
+
+  def get_k_values(enr)
+    enr.kindergarten_participation_by_year.values
+  end
+
+  def get_k(enr)
+    enr.name_stats[:kindergarten]
+  end
+  
 end
 
