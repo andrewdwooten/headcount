@@ -1,6 +1,7 @@
 require './lib/district.rb'
 require './lib/enrollment_repo.rb'
 require './lib/parser.rb'
+require 'pry'
 
 class DistrictRepository
 include Parser
