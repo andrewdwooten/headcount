@@ -1,4 +1,5 @@
 require 'pry'
+require 'pry'
 require_relative 'district_repo'
 
 class HeadcountAnalyst
@@ -9,7 +10,9 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_rate_variation(district1, district2)
-
+    dist1 = average(@dr.find_by_name(district1).enrollment.kindergarten_participation_by_year.values)
+    dist2 = average(@dr.find_by_name(district2[:against]).enrollment.kindergarten_participation_by_year.values)
+    dist1 / dist2
   end
 
   def average(digits)
@@ -22,4 +25,11 @@ class HeadcountAnalyst
   def truncate(input)
     input.to_f.round(3)
   end
+
+  def participation_average
+
+  end
 end
+
+
+

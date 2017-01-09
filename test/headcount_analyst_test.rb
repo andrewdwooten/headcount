@@ -21,7 +21,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_it_can_return_an_average
     numbers = {"one" => 0.123, "two" => 0.456, "three" => 0.789 }
-    assert_in_delta 0.456, @ha.average(numbers.values), 0.005
+    assert_equal 0.456, @ha.average(numbers.values)
   end
 
   def test_it_can_access_district_repo_and_enrollment
@@ -30,7 +30,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_it_can_compare_two_districts
-
+    assert_equal 0.685, @ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO')
   end
 
 end
