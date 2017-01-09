@@ -1,7 +1,15 @@
 require 'csv'
 module Parser
 
-def build_base(nest)
+def build_districts(nest)
+  file = nest[:enrollment][:kindergarten]
+  contents = []
+  data = CSV.read file, headers: true, header_converters: :symbol
+  data.each {|row| contents << {:name => row[0]}; contents.uniq!}
+  contents
+end
+
+def build_enrollments(nest)
   contents = []
   nest.values[0].each do |symbol, file|
       data = CSV.read file, headers: true, header_converters: :symbol
@@ -29,6 +37,10 @@ def build_base(nest)
 
   def get_k(enr)
     enr.name_stats[:kindergarten]
+  end
+
+  def get_h(enr)
+    enr.name_stats[:high_school_graduation]
   end
   
 end

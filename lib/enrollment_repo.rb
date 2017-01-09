@@ -10,7 +10,7 @@ class EnrollmentRepository
 	end
 
 	def load_data(nest)
-    build_base(nest).each do |enroller|
+    build_enrollments(nest).each do |enroller|
       contents << Enrollment.new(enroller)
     end
 	end

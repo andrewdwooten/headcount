@@ -18,4 +18,19 @@ class Enrollment
 	def name
 		name_stats.values[0]
 	end
+
+	def graduation_rate_by_year
+		name_stats[:high_school_graduation]
+	end
+
+	def graduation_rate_in_year(year)
+		rate = name_stats[:high_school_graduation][year]
+		if rate == nil 
+			 nil
+		else
+			rate
+		end
+	end
+
+
 end

@@ -14,7 +14,7 @@ include Parser
 	end
 
 	def load_data(load)
-		build_base(load).each do |base|
+		build_districts(load).each do |base|
       contents << District.new(base, self) end
 		enrollment.load_data(load)
 	end
