@@ -30,6 +30,14 @@ include Parser
     k2 = get_k(link_to_enroll(dr, district2[:against]))
     k1.each {|year, percent| k1[year] = truncate(average([k2[year],percent]))}
   end
+
+  def graduation_variation(district1, district2 = "Colorado")
+    truncate(average(get_h_values(link_to_enroll(dr,district1))) /
+      average(get_h_values(link_to_enroll(dr, district2))))
+  end
+
+  def kindergarten_participation_against_high_school_graduation(district)
+    k = kinder
 end
 
 

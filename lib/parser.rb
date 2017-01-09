@@ -42,6 +42,10 @@ def build_enrollments(nest)
   def get_h(enr)
     enr.name_stats[:high_school_graduation]
   end
+
+  def get_h_values(enr)
+    enr.graduation_rate_by_year
+  end
   
 end
 
