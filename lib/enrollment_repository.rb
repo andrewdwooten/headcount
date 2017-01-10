@@ -1,5 +1,5 @@
-require_relative 'enrollment'
-require_relative 'parser'
+require_relative 'enrollment.rb'
+require_relative 'parser.rb'
 
 class EnrollmentRepository
   include Parser

@@ -1,6 +1,6 @@
-require_relative 'district'
-require_relative 'enrollment_repo'
-require_relative 'parser'
+require_relative 'district.rb'
+require_relative 'enrollment_repository.rb'
+require_relative 'parser.rb'
 require 'pry'
 
 class DistrictRepository

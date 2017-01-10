@@ -16,7 +16,7 @@ def build_enrollments(nest)
       data.each {|row| contents << {:name=>row[0]}; contents.uniq!}
       contents.each {|future_enrollment| future_enrollment[symbol] = {}}
       data.each {|row| contents.each do |future_enrollment| if future_enrollment[:name] == row[0] 
-        future_enrollment[symbol].merge!({row[1]=>row[3].to_f})
+        future_enrollment[symbol].merge!({row[1].to_i=>row[3].to_f})
           end
         end}
     end
@@ -44,7 +44,7 @@ def build_enrollments(nest)
   end
 
   def get_h_values(enr)
-    enr.graduation_rate_by_year
+    enr.graduation_rate_by_year.values
   end
   
 end

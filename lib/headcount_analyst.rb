@@ -1,5 +1,5 @@
-require_relative 'district_repo'
-require_relative 'parser'
+require_relative 'district_repository.rb'
+require_relative 'parser.rb'
 require 'pry'
 
 class HeadcountAnalyst
@@ -37,8 +37,41 @@ include Parser
   end
 
   def kindergarten_participation_against_high_school_graduation(district)
-    k = kinder
-end
+    k = kindergarten_participation_rate_variation(district, :against => "Colorado")
+    h = graduation_variation(district)
+    truncate(k/h)
+  end
+
+  def kindergarten_participation_correlates_with_high_school_graduation(district)
+    case
+    when district[:for] == 'STATEWIDE'
+        districts = []
+        dr.contents.each {|district| districts << district.name}
+        kindergarten_participation_correlates_with_high_school_graduation(:across=>districts)
+    when district[:for] != 'STATEWIDE' && district[:for].class == String
+        cor = kindergarten_participation_against_high_school_graduation(district[:for])
+          determine_correlation?(cor)
+    when district[:across].class == Array
+       a = k_versus_highschool_multiple(district[:across]).delete_if do |boolean|
+          boolean == true end
+       a.empty?
+    end
+  end
+        
+    def determine_correlation?(cor)
+      cor > 0.6 && cor < 1.5
+    end
+
+    def k_versus_highschool_multiple(districts)
+      districts.map! do |district|
+        v = kindergarten_participation_against_high_school_graduation(district)
+        determine_correlation?(v)
+      end
+    end
+
+  end
+
+
 
 
 

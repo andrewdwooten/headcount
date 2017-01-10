@@ -1,6 +1,6 @@
 require_relative 'test_helper.rb'
 require './lib/parser.rb'
-require './lib/district_repo.rb'
+require './lib/district_repository.rb'
 
 class ParserTest < MiniTest::Test
   include Parser
@@ -39,13 +39,19 @@ class ParserTest < MiniTest::Test
     enr = link_to_enroll(dr, "academy 20")
     test = get_k(enr)
     assert_equal Hash, test.class
-    assert_equal ["2007", "2006"], test.keys
+    assert_equal ({2007=>0.39159, 2006=>0.35364}), test
   end
 
   def test_get_h_returns_hash_of_high_school_grad_rates
     enr = link_to_enroll(dr, "academy 20")
     test = get_h(enr)
     assert_equal Hash, test.class
-    assert_equal ({"2010" => 0.895, "2011" => 0.895}), test
+    assert_equal ({2010 => 0.895, 2011 => 0.895}), test
+  end
+
+  def test_get_k_values_returns_array_of_participation_percentages
+    enr = link_to_enroll(dr, "academy 20")
+    assert_equal Array, get_k_values(enr).class
+    assert_equal [0.39159, 0.35364], get_k_values(enr)
   end
 end
