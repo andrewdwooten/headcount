@@ -1,6 +1,6 @@
-require './lib/district.rb'
-require './lib/enrollment_repo.rb'
-require './lib/parser.rb'
+require_relative 'district.rb'
+require_relative 'enrollment_repository.rb'
+require_relative 'parser.rb'
 require 'pry'
 
 class DistrictRepository
@@ -14,7 +14,7 @@ include Parser
 	end
 
 	def load_data(load)
-		build_base(load).each do |base|
+		build_districts(load).each do |base|
       contents << District.new(base, self) end
 		enrollment.load_data(load)
 	end

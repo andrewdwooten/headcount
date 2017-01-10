@@ -1,5 +1,5 @@
-require './lib/enrollment.rb'
-require './lib/parser.rb'
+require_relative 'enrollment.rb'
+require_relative 'parser.rb'
 
 class EnrollmentRepository
   include Parser
@@ -10,7 +10,7 @@ class EnrollmentRepository
 	end
 
 	def load_data(nest)
-    build_base(nest).each do |enroller|
+    build_enrollments(nest).each do |enroller|
       contents << Enrollment.new(enroller)
     end
 	end
