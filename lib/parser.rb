@@ -16,7 +16,7 @@ def build_enrollments(nest)
       data = CSV.read file, headers: true, header_converters: :symbol
       data.each {|row| contents << {:name=>row[0]}; contents.uniq!}
       contents.each {|future_enrollment| future_enrollment[symbol] = {}}
-      data.each {|row| contents.each do |future_enrollment| if future_enrollment[:name] == row[0] 
+      data.each {|row| contents.each do |future_enrollment| if future_enrollment[:name] == row[0]
         future_enrollment[symbol].merge!({row[1].to_i=>row[3].to_f})
           end
         end}
@@ -24,7 +24,7 @@ def build_enrollments(nest)
     cleanup(contents, nest)
 end
 
-def build_grades(nest) 
+def build_grades(nest)
   sub_nest = {}
   sub_nest.merge!(:third_grade=>nest[:statewide_testing][:third_grade])
   sub_nest.merge!(:eighth_grade=>nest[:statewide_testing][:eighth_grade])
@@ -32,7 +32,7 @@ def build_grades(nest)
   sub_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
     data.each {|row| contents << {:name=>row[0]}; contents.uniq!}
-    contents.each {|future_state| future_state[symbol] = {}} 
+    contents.each {|future_state| future_state[symbol] = {}}
     data.each do |row|
       contents.each {|future_state| future_state[symbol][row[2].to_i] = {}; contents.uniq!}
     end
@@ -53,7 +53,7 @@ def build_race_stats(contents, nest)
   sub_nest.merge!(:writing=>nest[:statewide_testing][:writing])
   sub_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
-    data.each do |row| 
+    data.each do |row|
       contents.each do |future_state|
         if future_state[:name] == row[0]
           future_state[row[1].downcase.gsub(' ', '_').to_sym] = {}
@@ -70,7 +70,7 @@ def build_race_stats(contents, nest)
   end
   sub_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
-    data.each do |row|  
+    data.each do |row|
       contents.each do |future_state|
         if future_state[:name] == row[0]
           future_state[row[1].downcase.gsub(' ', '_').to_sym][row[2].to_i].merge!(symbol.to_sym=>row[4].to_f)
@@ -79,7 +79,7 @@ def build_race_stats(contents, nest)
     end
   end
   fix_keys(contents)
-end   
+end
 
   def test_cleanup(load_base, base)
     load_base.map! {|test| test if test.keys.count == base.keys.count + 1}.compact!
@@ -115,6 +115,30 @@ end
   def get_h_values(enr)
     enr.graduation_rate_by_year.values
   end
-  
+
+  def build_econ(nest)
+    contents = []
+    subnest = {}
+  subnest.merge!(:median_household_income=>nest[:economic_profile][:median_household_income])
+    subnest.each do |symbol, file|
+      data = CSV.read file, headers: true, header_converters: :symbol
+      data.each { |row| contents << {:name => row[0],symbol.to_sym => {}}; contents.uniq! }
+      data.each do |row|
+        contents.each do |future_econ| if future_econ[:name] == row[0]
+          future_econ[symbol.to_sym].merge!(row[1].split('-') => row[3].to_i)
+        end
+      end
+    end
+    binding.pry
+   contents
+  end
+
+  def cleanup_strings(contents)
+    binding.pry
+    contents[:median_household_income].each_key do |key|
+      key.each {|element| element.to_i}
+    end
+    end
+  end
 end
 
