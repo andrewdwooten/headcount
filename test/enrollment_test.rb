@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 require './lib/enrollment.rb'
-require './lib/enrollment_repo.rb'
+require './lib/enrollment_repository.rb'
 
 class EnrollmentTest < MiniTest::Test
 	attr_reader :e, :er
@@ -41,12 +41,12 @@ class EnrollmentTest < MiniTest::Test
 			enr = er.find_by_name("academy 20")
 			test = enr.graduation_rate_by_year
 			assert_equal Hash, test.class
-			assert_equal ({"2010"=>0.895, "2011"=>0.895}), test
+			assert_equal ({2010=>0.895, 2011=>0.895}), test
 		end
 
 		def test_enrollment_can_return_rate_in_year_of_graduation
 			enr = er.find_by_name("academy 20")
-			test = enr.graduation_rate_in_year("2010")
+			test = enr.graduation_rate_in_year(2010)
 			assert_equal 0.895, test
 		end
 	end
