@@ -119,13 +119,13 @@ end
   def build_econ(nest)
     contents = []
     subnest = {}
-  subnest.merge!(:median_household_income=>nest[:economic_profile][:median_household_income])
+    subnest.merge!(:median_household_income=>nest[:economic_profile][:median_household_income])
     subnest.each do |symbol, file|
       data = CSV.read file, headers: true, header_converters: :symbol
       data.each { |row| contents << {:name => row[0],symbol.to_sym => {}}; contents.uniq! }
       data.each do |row|
         contents.each do |future_econ| if future_econ[:name] == row[0]
-          future_econ[symbol.to_sym].merge!(row[1].split('-') => row[3].to_i)
+          future_econ[symbol.to_sym].merge!(row[1].split('-') => row[3].to_i) end
         end
       end
     end
@@ -134,10 +134,10 @@ end
   end
 
   def cleanup_strings(contents)
-    binding.pry
-    contents[:median_household_income].each_key do |key|
-      key.each {|element| element.to_i}
-    end
+     contents.each do |future_econ|
+      future_econ[:median_household_income].each_key do |key|
+        key[0] = key[0].to_i; key[1] = key[1].to_i
+      end
     end
   end
 end
