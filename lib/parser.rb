@@ -26,8 +26,8 @@ end
 
 def build_grades(nest)
   sub_nest = {}
-  sub_nest.merge!(:third_grade=>nest[:statewide_testing][:third_grade])
-  sub_nest.merge!(:eighth_grade=>nest[:statewide_testing][:eighth_grade])
+  sub_nest.merge!(:third_grade=>nest[:third_grade])
+  sub_nest.merge!(:eighth_grade=>nest[:eighth_grade])
   contents = []
   sub_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
@@ -47,11 +47,11 @@ def build_grades(nest)
 end
 
 def build_race_stats(contents, nest)
-  sub_nest = {}
-  sub_nest.merge!(:math=>nest[:statewide_testing][:math])
-  sub_nest.merge!(:reading=>nest[:statewide_testing][:reading])
-  sub_nest.merge!(:writing=>nest[:statewide_testing][:writing])
-  sub_nest.each do |symbol, file|
+  subb_nest = {}
+  subb_nest.merge!(:math=>nest[:math])
+  subb_nest.merge!(:reading=>nest[:reading])
+  subb_nest.merge!(:writing=>nest[:writing])
+  subb_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
     data.each do |row|
       contents.each do |future_state|
@@ -68,7 +68,7 @@ def build_race_stats(contents, nest)
       end
     end
   end
-  sub_nest.each do |symbol, file|
+  subb_nest.each do |symbol, file|
     data = CSV.read file, headers: true, header_converters: :symbol
     data.each do |row|
       contents.each do |future_state|
@@ -163,7 +163,26 @@ end
         end
       end
     end
+    build_poverties(contents,nest)
   end
 
+  def build_poverties(contents, nest)
+    subnest = {}
+    subnest.merge!(:title_i=>nest[:economic_profile][:title_i])
+    subnest.merge!(:children_in_poverty=>nest[:economic_profile][:children_in_poverty])
+    subnest.each do |symbol,file|
+      data = CSV.read file, headers: true, header_converters: :symbol
+      contents.each {|future_econ| future_econ[symbol.to_sym] = {}}
+      data.each do |row|
+        contents.each do |future_econ| 
+          if future_econ[:name] == row[0] && row[2] == "Percent"
+            future_econ[symbol.to_sym][row[1].to_i] = row[3].to_f
+          else
+          end
+        end
+      end
+    end
+    contents
+  end
 end
 

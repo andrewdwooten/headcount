@@ -10,7 +10,7 @@ class StatewideTestRepository
 	end
 
 	def load_data(nest)
-    build_grades(nest).each do |test|
+    build_grades(nest[:statewide_testing]).each do |test|
       contents << StatewideTest.new(test)
     end
 	end

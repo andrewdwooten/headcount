@@ -7,7 +7,7 @@ class DistrictTest < MiniTest::Test
 attr_reader :dr
 
 def setup
-  @dr = DistrictRepository.new
+@dr = DistrictRepository.new
 			dr.load_data({
   :enrollment => {
     :kindergarten => "./data/Kindergartners in full-day program.csv",
@@ -18,7 +18,12 @@ def setup
     :eighth_grade => "./test/fixtures/8thgrdproficient_fixture.csv",
     :math => "./test/fixtures/math_by_race_fixture.csv",
     :reading => "./test/fixtures/reading_by_race_fixture.csv",
-    :writing => "./test/fixtures/writing_by_race_fixture.csv"}})
+    :writing => "./test/fixtures/writing_by_race_fixture.csv"},
+	 :economic_profile => {
+    :median_household_income => "./data/Median household income.csv",
+    :children_in_poverty => "./data/School-aged children in poverty.csv",
+    :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+    :title_i => "./data/Title I students.csv" }})
 	end
 
   def test_it_is_a_district
@@ -47,5 +52,10 @@ def setup
 		assert_equal 0.3926, district.statewide_test.proficient_for_subject_by_race_in_year(:math,:hispanic, 2011)
 		assert_equal 'Colorado', district.name
 	end
+
+  def test_district_repo_districts_have_relationship_with_economic
+    district = dr.find_by_name('academy 20')
+    assert_instance_of EconomicProfile, district.economic_profile
+  end
 			
 end

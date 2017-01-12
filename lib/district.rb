@@ -16,4 +16,9 @@ class District
 			state if state.name == name end)[0]
 	end
 
+	def economic_profile
+		(dr.econs.contents.select do |econ|
+			econ if econ.name == name end)[0]
+	end
+
 end
