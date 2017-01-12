@@ -1,5 +1,5 @@
 require_relative 'test_helper.rb'
-require_relative '../lib/statewidetest.rb'
+require_relative '../lib/statewide_test.rb'
 require_relative '../lib/statewidetest_repository.rb'
 
 class StatewideTestRepositoryTest < MiniTest::Test

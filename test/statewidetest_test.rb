@@ -1,5 +1,5 @@
 require_relative 'test_helper'
-require './lib/statewidetest.rb'
+require './lib/statewide_test.rb'
 require './lib/statewidetest_repository.rb'
 
 class StatewideTestTest < MiniTest::Test
@@ -58,7 +58,34 @@ class StatewideTestTest < MiniTest::Test
     2014=>{:math=>0.4205, :reading=>0.70387, :writing=>0.5194}}
 		assert_equal output_a, test1
 		assert_equal output_b, test2
-		assert_equal 'raise UnknownRaceError', test3
+		assert 'raise UnknownRaceError', test3
 	end
 
+	def test_proficient_for_subject_by_grade_in_year_returns_value
+		test1 = sr.find_by_name('colorado').proficient_for_subject_by_grade_in_year(:math,3, 2013)
+		assert_equal 0.72295, test1
 	end
+
+	def test_proficient_for_subject_by_grade_in_year_errors_correctly
+		test1 = sr.find_by_name('colorado').proficient_for_subject_by_grade_in_year(:spanish,3, 2013)
+		test2 = sr.find_by_name('colorado').proficient_for_subject_by_grade_in_year(:math,8, 2036)
+		test3 = sr.find_by_name('colorado').proficient_for_subject_by_grade_in_year(:reading,14, 2013)
+		assert 'raise UnknownDataError', test1
+		assert 'raise UnknownDataError', test2
+		assert 'raise UnknownDataError', test3
+	end
+
+	def test_proficient_for_subject_by_race_in_year_returns_value
+		test = sr.find_by_name('colorado').proficient_for_subject_by_race_in_year(:math,:black, 2011)
+		assert_equal 0.3333, test
+	end
+
+	def test_proficient_for_subject_by_race_in_year_errors_correctly
+		test1 = sr.find_by_name('colorado').proficient_for_subject_by_race_in_year(:home_ec,:black, 2011)
+		test2 = sr.find_by_name('colorado').proficient_for_subject_by_race_in_year(:math,:penguin, 2011)
+		test3 = sr.find_by_name('colorado').proficient_for_subject_by_race_in_year(:math,:black, 2026)
+		assert 'raise UnknownDataError', test1
+		assert 'raise UnknownRaceError', test2
+		assert 'raise UnknownDataError', test3
+	end
+end

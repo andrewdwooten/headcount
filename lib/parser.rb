@@ -24,7 +24,7 @@ def build_enrollments(nest)
     cleanup(contents, nest)
 end
 
-def build_grades(nest) #full build looks good.  need to figure out how to get nest to build_race_stats
+def build_grades(nest) 
   sub_nest = {}
   sub_nest.merge!(:third_grade=>nest[:statewide_testing][:third_grade])
   sub_nest.merge!(:eighth_grade=>nest[:statewide_testing][:eighth_grade])

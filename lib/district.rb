@@ -8,7 +8,12 @@ class District
 
 	def enrollment
 		(dr.enrollment.contents.select do |enrollment|
-		enrollment if enrollment.name_stats[:name] == name end)[0]
+			enrollment if enrollment.name_stats[:name] == name end)[0]
+	end
+
+	def statewide_test
+		(dr.states.contents.select do |state|
+			state if state.name == name end)[0]
 	end
 
 end

@@ -1,4 +1,4 @@
-require_relative 'statewidetest.rb'
+require_relative 'statewide_test.rb'
 require_relative 'parser.rb'
 
 class StatewideTestRepository
