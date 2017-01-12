@@ -3,7 +3,7 @@ require './lib/district_repository.rb'
 
 class DistrictRepoTest < MiniTest::Test
 
-	attr_reader :dr, :dr2, :dr3
+	attr_reader :dr, :dr2, :dr3, :dr4
 
 	def setup
 		@dr = DistrictRepository.new
@@ -24,6 +24,24 @@ class DistrictRepoTest < MiniTest::Test
     :math => "./test/fixtures/math_by_race_fixture.csv",
     :reading => "./test/fixtures/reading_by_race_fixture.csv",
     :writing => "./test/fixtures/writing_by_race_fixture.csv"}})
+
+		@dr4 = DistrictRepository.new
+			dr4.load_data({
+  :enrollment => {
+    :kindergarten => "./data/Kindergartners in full-day program.csv",
+    :high_school_graduation => "./data/High school graduation rates.csv",
+  },
+  :statewide_testing => {
+    :third_grade => "./test/fixtures/3rdgrdproficient_fixture.csv",
+    :eighth_grade => "./test/fixtures/8thgrdproficient_fixture.csv",
+    :math => "./test/fixtures/math_by_race_fixture.csv",
+    :reading => "./test/fixtures/reading_by_race_fixture.csv",
+    :writing => "./test/fixtures/writing_by_race_fixture.csv"},
+	 :economic_profile => {
+    :median_household_income => "./data/Median household income.csv",
+    :children_in_poverty => "./data/School-aged children in poverty.csv",
+    :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+    :title_i => "./data/Title I students.csv" }})
 	end
 
 		def test_it_is_a_district_repo
@@ -56,8 +74,14 @@ class DistrictRepoTest < MiniTest::Test
 		end
 
 		def test_on_loading_data_the_dr_generates_loads_enrollment_repo
-			assert_equal EnrollmentRepository, dr.enrollment.class
-			refute dr.enrollment.contents.empty?
+			assert_equal EnrollmentRepository, dr4.enrollment.class
+			refute dr3.enrollment.contents.empty?
 		end
+
+		def test_on_loading_data_the_dr_loads_econ_repo
+			assert_instance_of EconomicProfileRepository, dr4.econs
+			refute dr4.econs.contents.empty?
+		end
+
 	end
 
