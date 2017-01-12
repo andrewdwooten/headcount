@@ -129,8 +129,7 @@ end
         end
       end
     end
-    binding.pry
-   contents
+   build_lunches(cleanup_strings(contents),nest)
   end
 
   def cleanup_strings(contents)
@@ -140,5 +139,31 @@ end
       end
     end
   end
+
+  def build_lunches(contents,nest)
+    subnest = {}
+    subnest.merge!(:free_or_reduced_price_lunch=>nest[:economic_profile][:free_or_reduced_price_lunch])
+    subnest.each do |symbol, file|
+      data = CSV.read file, headers: true, header_converters: :symbol
+      contents.each { |future_econ| future_econ[symbol.to_sym] = {} }
+      data.each do |row|
+        contents.each do |future_econ|
+          if future_econ[:name] == row[0]
+            future_econ[symbol.to_sym][row[2].to_i] = {}
+          end
+        end
+      end
+      data.each do |row|
+        contents.each do |future_econ|
+          if future_econ[:name] == row[0] && row[3] == "Percent"
+            future_econ[symbol.to_sym][row[2].to_i].merge!({:percentage => row[4].to_f}){|k,v1,v2| v1+v2}
+          elsif future_econ[:name] == row[0] && row[3] == "Number"
+            future_econ[symbol.to_sym][row[2].to_i].merge!({:total => row[4].to_f}){|k,v1,v2| v1+v2}
+          end
+        end
+      end
+    end
+  end
+
 end
 
